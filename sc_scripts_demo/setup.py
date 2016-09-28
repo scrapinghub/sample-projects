@@ -9,6 +9,6 @@ setup(
         'bin/check_jobs.py',
     ],
     entry_points={
-        'scrapy': ['settings = myproject.settings'],
+        'scrapy': ['settings = sc_scripts_demo.settings'],
     },
 )
