@@ -68,7 +68,7 @@ def render_report(jobs_with_error):
         close_reason = job.info.get('close_reason')
 
         job_id = job.info["id"].split('/')
-        url = 'https://dash.scrapinghub.com/p/{0}/job/{1}/{2}'.format(
+        url = 'https://app.scrapinghub.com/p/{0}/job/{1}/{2}'.format(
             job_id[0], job_id[1], job_id[2])
 
         error_message = ['Errors found for job "{0}" ({1}):'.format(
