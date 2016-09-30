@@ -76,7 +76,9 @@ def render_report(jobs_with_error):
         if errors_count > 0:
             error_message.append('    There were {} error{}.'.format(
                 errors_count, '' if errors_count == 1 else 's'))
-        if close_reason != 'no_reason':
+
+        success_reasons = ('no_reason', 'finished')
+        if close_reason not in success_reasons:
             error_message.append('    Close reason should not be "{}".'.format(
                 close_reason))
         output.append('\n'.join(error_message))
