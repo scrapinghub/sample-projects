@@ -3,6 +3,7 @@ import scrapy
 from selenium import webdriver
 
 
+# this spider needs PhantomJS (http://phantomjs.org/) installed somewhere in your PATH
 class ToScrapeSeleniumSpider(scrapy.Spider):
     name = 'toscrape-selenium'
     start_urls = [
