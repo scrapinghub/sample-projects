@@ -109,8 +109,8 @@ execution on Scrapy Cloud.
 
 This project has two main components:
 
-- the [**spiders**](https://github.com/stummjr/scrapy_price_monitor/tree/master/price_monitor/spiders) that collect prices from the retailers' websites
-- the [**price monitor script**](https://github.com/stummjr/scrapy_price_monitor/blob/master/bin/monitor.py) that checks whether there's a new deal in the latest prices
+- the [**spiders**](https://github.com/scrapinghub/sample-projects/blob/master/scrapy_price_monitor/price_monitor/spiders) that collect prices from the retailers' websites
+- the [**price monitor script**](https://github.com/scrapinghub/sample-projects/blob/master/scrapy_price_monitor/bin/monitor.py) that checks whether there's a new deal in the latest prices
 
 You have to schedule both the spiders and the monitor to run periodically on
 Scrapy Cloud. It's a good idea to schedule all the spiders to run at the same
@@ -137,7 +137,7 @@ You can run this project on Scrapy Cloud or on your local environment. The only 
 from Scrapy Cloud is the [Collections API](https://doc.scrapinghub.com/api/collections.html),
 but the spiders and the monitor can be executed locally.
 
-To do that, first add your Scrapy Cloud project id to [settings.py `SHUB_PROJ_ID` variable](https://github.com/stummjr/scrapy_price_monitor/blob/master/price_monitor/settings.py#L11).
+To do that, first add your Scrapy Cloud project id to [settings.py `SHUB_PROJ_ID` variable](https://github.com/scrapinghub/sample-projects/blob/master/scrapy_price_monitor/price_monitor/settings.py#L11).
 
 Then run the spiders via command line:
 
