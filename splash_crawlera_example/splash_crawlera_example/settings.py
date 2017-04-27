@@ -10,14 +10,11 @@ SPIDER_MIDDLEWARES = {
 }
 
 DOWNLOADER_MIDDLEWARES = {
-    'scrapy_crawlera.CrawleraMiddleware': 300,
     'scrapy_splash.SplashCookiesMiddleware': 723,
     'scrapy_splash.SplashMiddleware': 725,
     'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
 }
 
-# Crawlera settings
-CRAWLERA_ENABLED = True
 CRAWLERA_APIKEY = os.getenv('CRAWLERA_APIKEY')
 
 # Splash settings
