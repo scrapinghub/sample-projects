@@ -9,7 +9,7 @@ class QuotesJsSpider(scrapy.Spider):
 
     def __init__(self, *args, **kwargs):
         self.LUA_SOURCE = pkgutil.get_data(
-            'splash_crawlera_example', 'spiders/crawlera.lua'
+            'splash_crawlera_example', 'scripts/crawlera.lua'
         ).decode()
         super(QuotesJsSpider).__init__(*args, **kwargs)
 
@@ -24,7 +24,6 @@ class QuotesJsSpider(scrapy.Spider):
                 'lua_source': self.LUA_SOURCE,
                 'crawlera_user': self.settings['CRAWLERA_APIKEY'],
                 'crawlera_pass': '',
-                'url': 'http://quotes.toscrape.com/js',
             }
         )
 
@@ -39,7 +38,7 @@ class QuotesJsSpider(scrapy.Spider):
         next_page = response.css('li.next > a::attr(href)').extract_first()
         if next_page:
             yield SplashRequest(
-                response.urljoin(next_page),
+                url=response.urljoin(next_page),
                 endpoint='execute',
                 splash_headers={
                     'Authorization': basic_auth_header(self.settings['SPLASH_APIKEY'], ''),
@@ -48,6 +47,5 @@ class QuotesJsSpider(scrapy.Spider):
                     'lua_source': self.LUA_SOURCE,
                     'crawlera_user': self.settings['CRAWLERA_APIKEY'],
                     'crawlera_pass': '',
-                    'url': response.urljoin(next_page),
                 }
             )

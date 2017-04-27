@@ -21,6 +21,6 @@ CRAWLERA_ENABLED = True
 CRAWLERA_APIKEY = os.getenv('CRAWLERA_APIKEY')
 
 # Splash settings
-SPLASH_URL = os.getenv('SPLASH_URL')  # <-- Splash instance URL from Scrapy Cloud
-SPLASH_APIKEY = os.getenv('SPLASH_APIKEY')  # <-- your API key
+SPLASH_URL = os.getenv('SPLASH_URL')  # Splash instance URL from Scrapy Cloud
+SPLASH_APIKEY = os.getenv('SPLASH_APIKEY')  # Your API key for Splash hosted on Scrapy Cloud
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'

@@ -51,6 +51,6 @@ end
 
 function main(splash)
     use_crawlera(splash)
-    assert(splash:go(splash.args.url))
+    splash:go(splash.args.url)
     return splash:html()
 end
