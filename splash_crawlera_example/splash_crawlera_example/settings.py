@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import os
 
 BOT_NAME = 'splash_crawlera_example'
 SPIDER_MODULES = ['splash_crawlera_example.spiders']
@@ -15,9 +14,9 @@ DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
 }
 
-CRAWLERA_APIKEY = os.getenv('CRAWLERA_APIKEY')
+CRAWLERA_APIKEY = ''  # Your crawlera API key
 
 # Splash settings
-SPLASH_URL = os.getenv('SPLASH_URL')  # Splash instance URL from Scrapy Cloud
-SPLASH_APIKEY = os.getenv('SPLASH_APIKEY')  # Your API key for Splash hosted on Scrapy Cloud
+SPLASH_URL = ''     # Splash instance URL from Scrapy Cloud
+SPLASH_APIKEY = ''  # Your API key for the Splash instance hosted on Scrapy Cloud
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
