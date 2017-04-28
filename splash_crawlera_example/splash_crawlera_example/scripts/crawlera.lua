@@ -1,9 +1,8 @@
 function use_crawlera(splash)
-    -- Put your Crawlera username and password here. This is different from your
-    -- Scrappinghub account. Find your Crawlera username and password in
-    -- https://app.scrapinghub.com/
+    -- Make sure you pass your Crawlera API key in the "crawlera_user" arg.
+    -- Have a look at the file spiders/quotes-js.py to see how to do it.
+    -- Find your Crawlera credentials in https://app.scrapinghub.com/
     local user = splash.args.crawlera_user
-    local password = ""
 
     local host = 'proxy.crawlera.com'
     local port = 8010
@@ -39,7 +38,7 @@ function use_crawlera(splash)
         request:set_header("X-Crawlera-UA", "desktop")
         request:set_header('X-Crawlera-Cookies', 'disable')
         request:set_header(session_header, session_id)
-        request:set_proxy{host, port, username=user, password=password}
+        request:set_proxy{host, port, username=user, password=''}
     end)
 
     splash:on_response_headers(function (response)

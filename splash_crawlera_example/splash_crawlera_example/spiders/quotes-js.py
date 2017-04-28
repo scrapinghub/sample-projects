@@ -8,6 +8,9 @@ class QuotesJsSpider(scrapy.Spider):
     name = 'quotes-js'
 
     def __init__(self, *args, **kwargs):
+        # to be able to load the Lua script on Scrapy Cloud, make sure your
+        # project's setup.py file contains the "package_data" setting, similar
+        # to this project's setup.py
         self.LUA_SOURCE = pkgutil.get_data(
             'splash_crawlera_example', 'scripts/crawlera.lua'
         ).decode()
@@ -15,7 +18,7 @@ class QuotesJsSpider(scrapy.Spider):
 
     def start_requests(self):
         yield SplashRequest(
-            'http://quotes.toscrape.com/js',
+            'http://quotes.toscrape.com/js/',
             endpoint='execute',
             splash_headers={
                 'Authorization': basic_auth_header(self.settings['SPLASH_APIKEY'], ''),
@@ -23,7 +26,6 @@ class QuotesJsSpider(scrapy.Spider):
             args={
                 'lua_source': self.LUA_SOURCE,
                 'crawlera_user': self.settings['CRAWLERA_APIKEY'],
-                'crawlera_pass': '',
             }
         )
 
@@ -46,6 +48,5 @@ class QuotesJsSpider(scrapy.Spider):
                 args={
                     'lua_source': self.LUA_SOURCE,
                     'crawlera_user': self.settings['CRAWLERA_APIKEY'],
-                    'crawlera_pass': '',
                 }
             )
