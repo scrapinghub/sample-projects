@@ -1,4 +1,4 @@
-import pkgutil
+from pkgutil import get_data
 import scrapy
 from scrapy_splash import SplashRequest
 from w3lib.http import basic_auth_header
@@ -11,14 +11,14 @@ class QuotesJsSpider(scrapy.Spider):
         # to be able to load the Lua script on Scrapy Cloud, make sure your
         # project's setup.py file contains the "package_data" setting, similar
         # to this project's setup.py
-        self.LUA_SOURCE = pkgutil.get_data(
+        self.LUA_SOURCE = get_data(
             'splash_crawlera_example', 'scripts/crawlera.lua'
-        ).decode()
-        super(QuotesJsSpider).__init__(*args, **kwargs)
+        ).decode('utf-8')
+        super(QuotesJsSpider, self).__init__(*args, **kwargs)
 
     def start_requests(self):
         yield SplashRequest(
-            'http://quotes.toscrape.com/js/',
+            url='http://quotes.toscrape.com/js/',
             endpoint='execute',
             splash_headers={
                 'Authorization': basic_auth_header(self.settings['SPLASH_APIKEY'], ''),
@@ -26,7 +26,9 @@ class QuotesJsSpider(scrapy.Spider):
             args={
                 'lua_source': self.LUA_SOURCE,
                 'crawlera_user': self.settings['CRAWLERA_APIKEY'],
-            }
+            },
+            # tell Splash to cache the lua script, to avoid sending it for every request
+            cache_args=['lua_source'],
         )
 
     def parse(self, response):
@@ -36,7 +38,6 @@ class QuotesJsSpider(scrapy.Spider):
                 'author': quote.css('span small::text').extract_first(),
                 'tags': quote.css('div.tags a.tag::text').extract(),
             }
-
         next_page = response.css('li.next > a::attr(href)').extract_first()
         if next_page:
             yield SplashRequest(
@@ -48,5 +49,6 @@ class QuotesJsSpider(scrapy.Spider):
                 args={
                     'lua_source': self.LUA_SOURCE,
                     'crawlera_user': self.settings['CRAWLERA_APIKEY'],
-                }
+                },
+                cache_args=['lua_source'],
             )

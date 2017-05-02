@@ -1,41 +1,35 @@
 function use_crawlera(splash)
-    -- Make sure you pass your Crawlera API key in the "crawlera_user" arg.
+    -- Make sure you pass your Crawlera API key in the 'crawlera_user' arg.
     -- Have a look at the file spiders/quotes-js.py to see how to do it.
     -- Find your Crawlera credentials in https://app.scrapinghub.com/
     local user = splash.args.crawlera_user
 
     local host = 'proxy.crawlera.com'
     local port = 8010
-    local session_header = "X-Crawlera-Session"
-    local session_id = "create"
+    local session_header = 'X-Crawlera-Session'
+    local session_id = 'create'
 
     splash:on_request(function (request)
-        -- Requests to Google domains are not allowed by Crawlera, but pages
-        -- frequently include tracking code or ads served by google. Block
-        -- those requests.
-        --
-        -- lua patterns follow a different syntax to normal regular expressions
-        if string.find(request.url, 'google%.[a-z][a-z][a-z]?') or
-           string.find(request.url, 'doubleclick%.net') or
-           string.find(request.url, 'googleapis%.com') then
-            request.abort()
-            return
-        end
+        -- The commented code below can be used to speed up the crawling
+        -- process. They filter requests to undesired domains and useless
+        -- resources. Uncomment the ones that make sense to your use case
+        -- and add your own rules.
 
-        -- If possible, avoid using Crawlera for subresource requests that
-        -- are not monitored. This will increase speed a lot. Here are some
-        -- example rules that you can use to match subresources:
+        -- Discard requests to advertising and tracking domains.
+        -- if string.find(request.url, 'doubleclick%.net') or
+        --    string.find(request.url, 'analytics%.google%.com') then
+        --     request.abort()
+        --     return
+        -- end
 
-        -- Don't use Crawlera for domains starting with static.
-        if string.find(request.url, '://static%.') ~= nil then
-            return
-        end
+        -- Avoid using Crawlera for subresources fetching to increase crawling
+        -- speed. The example below avoids using Crawlera for URLS starting
+        -- with 'static.' and the ones ending with '.png'.
+        -- if string.find(request.url, '://static%.') ~= nil or
+        --    string.find(request.url, '%.png$') ~= nil then
+        --     return
+        -- end
 
-        -- Don't use Crawlera for urls ending in .png
-        if string.find(request.url, '%.png$') ~= nil then
-            return
-        end
-        request:set_header("X-Crawlera-UA", "desktop")
         request:set_header('X-Crawlera-Cookies', 'disable')
         request:set_header(session_header, session_id)
         request:set_proxy{host, port, username=user, password=''}
