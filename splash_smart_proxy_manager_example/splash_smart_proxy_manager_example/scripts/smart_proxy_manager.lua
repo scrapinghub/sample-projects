@@ -6,7 +6,7 @@ function use_crawlera(splash)
     local password = ''
 
     local host = 'proxy.zyte.com'
-    local port = 8011
+    local port = 8010
     local session_header = 'X-Crawlera-Session'
     local session_id = 'create'
 
