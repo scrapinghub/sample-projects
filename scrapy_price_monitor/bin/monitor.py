@@ -5,10 +5,11 @@ import os
 from datetime import datetime, timedelta
 
 import boto
-from hubstorage import HubstorageClient
 from jinja2 import Environment, PackageLoader
+
 from price_monitor import settings
 from price_monitor.utils import get_product_names, get_retailers_for_product
+from price_monitor.collection_helper import CollectionHelper
 from w3lib.html import remove_tags
 
 jinja_env = Environment(loader=PackageLoader('price_monitor', 'templates'))
@@ -42,8 +43,13 @@ class DealsFetcher(object):
 
     def __init__(self, product_name, apikey, project_id, hours):
         self.product_name = product_name
-        project = HubstorageClient(apikey).get_project(project_id)
-        self.item_store = project.collections.new_store(product_name)
+        collection = CollectionHelper(
+            proj_id=project_id,
+            collection_name=product_name,
+            api_key=apikey,
+            create=True,
+        )
+        self.item_store = collection.store
         self.load_items_from_last_n_hours(hours)
 
     def load_items_from_last_n_hours(self, n=24):

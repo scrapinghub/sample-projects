@@ -1,14 +1,21 @@
-# -*- coding: utf-8 -*-
-
-# Define here the models for your scraped items
-#
-# See documentation in:
-# http://doc.scrapy.org/en/latest/topics/items.html
-
-import scrapy
+from scrapy import Item, Field
+from scrapy.loader import ItemLoader
+from itemloaders.processors import TakeFirst, MapCompose
+from price_parser import Price
 
 
-class PriceMonitorItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class PriceMonitorItem(Item):
+    url = Field()
+    title = Field()
+    price = Field()
+
+
+class PriceLoader(ItemLoader):
+    default_output_processor = TakeFirst()
+
+    title_in = MapCompose(lambda x: x.strip())
+    price_in = MapCompose(lambda x: Price.fromstring(x).amount_float)
+
+
+
+
