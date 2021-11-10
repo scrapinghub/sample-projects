@@ -1,9 +1,10 @@
-Scrapy Price Monitor
+Scrapy Price Monitor - Old Version
 ====================
 
+_This is a deprecated version of this project. It may not function on the latest versions of scrapy, python and the target websites_
+
 This is a simple price monitor built with [Scrapy](https://github.com/scrapy/scrapy)
-and [Scrapy Cloud](https://www.zyte.com/scrapy-cloud/). It is an updated version of 
-[this sample](https://github.com/scrapinghub/sample-projects/tree/master/scrapy_price_monitor/_scrapy_price_monitor_OLD).
+and [Scrapy Cloud](https://scrapinghub.com/scrapy-cloud).
 
 It is basically a Scrapy project with one spider for each online retailer that
 we want to monitor prices from. In addition to the spiders, there's a Python
@@ -20,6 +21,11 @@ the already supported retailers, just add a new key for that product and add
 the URL list as its value, such as:
 
     {
+        "headsetlogitech": [
+            "https://www.amazon.com/.../B005GTO07O/",
+            "http://www.bestbuy.com/.../3436118.p",
+            "http://www.ebay.com/.../110985874014"
+        ],
         "NewProduct": [
             "http://url.for.retailer.x",
             "http://url.for.retailer.y",
@@ -30,8 +36,16 @@ the URL list as its value, such as:
 
 ## Supporting Further Retailers
 
-To add a retailer, just create a spider to handle the product pages from it.
-To include a spider for samsclub.com, you
+This project currently only works with 3 online retailers, and you can list them
+running:
+
+    $ scrapy list
+    amazon.com
+    bestbuy.com
+    ebay.com
+
+If the retailer that you want to monitor is not yet supported, just create a spider
+to handle the product pages from it. To include a spider for samsclub.com, you
 could run:
 
     $ scrapy genspider samsclub.com samsclub.com
@@ -62,7 +76,7 @@ later when showing how to schedule the project on Scrapy Cloud.
 
 1. Clone this repo:
 
-        $ git clone git@github.com:further-reading/price-monitoring-sample.git
+        $ git clone git@github.com:stummjr/scrapy_price_monitor.git
 
 2. Enter the folder and install the project dependencies:
 
@@ -129,9 +143,9 @@ To do that, first add your Scrapy Cloud project id to [settings.py `SHUB_PROJ_ID
 
 Then run the spiders via command line:
 
-    $ scrapy crawl books.toscrape.com
+    $ scrapy crawl bestbuy.com
 
-This will run the spider named as `books.toscrape.com` and store the scraped data into
+This will run the spider named as `bestbuy.com` and store the scraped data into
 a Scrapy Cloud collection, under the project you set in the last step.
 
 You can also run the price monitor via command line:
