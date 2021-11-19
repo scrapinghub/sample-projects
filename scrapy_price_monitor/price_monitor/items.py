@@ -8,6 +8,8 @@ class Product(Item):
     url = Field()
     title = Field()
     price = Field()
+    product_name = Field()
+    retailer = Field()
 
 
 class ProductLoader(ItemLoader):
