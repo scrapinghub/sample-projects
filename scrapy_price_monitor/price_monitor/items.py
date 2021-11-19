@@ -4,14 +4,14 @@ from itemloaders.processors import TakeFirst, MapCompose
 from price_parser import Price
 
 
-class PriceMonitorItem(Item):
+class Product(Item):
     url = Field()
     title = Field()
     price = Field()
 
 
-class PriceLoader(ItemLoader):
-    default_item_class = PriceMonitorItem
+class ProductLoader(ItemLoader):
+    default_item_class = Product
     default_output_processor = TakeFirst()
 
     title_in = MapCompose(lambda x: x.strip())
