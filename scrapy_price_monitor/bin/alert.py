@@ -3,7 +3,6 @@
 
 import boto
 from jinja2 import Environment, PackageLoader
-import os
 
 from w3lib.html import remove_tags
 import logging
@@ -12,8 +11,8 @@ logger = logging.getLogger(__name__)
 jinja_env = Environment(loader=PackageLoader('price_monitor', 'alert_template'))
 
 # settings for Amazon SES email service
-AWS_ACCESS_KEY = os.getenv('$AWS_ACCESS_KEY')
-AWS_SECRET_KEY = os.getenv('$AWS_SECRET_KEY')
+AWS_ACCESS_KEY = 'AWS_ACCESS_KEY'
+AWS_SECRET_KEY = 'AWS_ACCESS_KEY'
 EMAIL_ALERT_FROM = 'Price Monitor <SENDER_EMAIL@provider.com>'
 EMAIL_ALERT_TO = ['RECEIVER_EMAIL@provider.com']
 

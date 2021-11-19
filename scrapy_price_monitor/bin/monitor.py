@@ -78,12 +78,12 @@ class DealsFetcher(object):
 
 def main(args):
     items = ['stuff']
-    # for prod_name in get_product_names():
-    #     fetcher = DealsFetcher(prod_name, args.apikey, args.project, args.days * 24)
-    #     checker = DealsChecker(*fetcher.get_deals(), args.threshold)
-    #     best_deal = checker.get_best_deal()
-    #     if checker.is_from_latest_crawl(best_deal):
-    #         items.append(best_deal)
+    for prod_name in get_product_names():
+        fetcher = DealsFetcher(prod_name, args.apikey, args.project, args.days * 24)
+        checker = DealsChecker(*fetcher.get_deals(), args.threshold)
+        best_deal = checker.get_best_deal()
+        if checker.is_from_latest_crawl(best_deal):
+            items.append(best_deal)
 
     if items:
         send_alert(items)

@@ -11,6 +11,7 @@ class PriceMonitorItem(Item):
 
 
 class PriceLoader(ItemLoader):
+    default_item_class = PriceMonitorItem
     default_output_processor = TakeFirst()
 
     title_in = MapCompose(lambda x: x.strip())

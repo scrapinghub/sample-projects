@@ -31,27 +31,25 @@ the URL list as its value, such as:
 ## Supporting Further Retailers
 
 To add a retailer, just create a spider to handle the product pages from it.
-To include a spider for samsclub.com, you
-could run:
+To include a spider for fake-website.com, you could run:
 
-    $ scrapy genspider samsclub.com samsclub.com
+    $ scrapy genspider fake-website.com fake-website.com
 
-And then, open the spider and add the extraction rules:
+And then you can open the newly created `fake_website_com.py` file in your IDE to edit the file.
 
-    $ scrapy edit samsclub.com
-
-Have a look at the current spiders and implement the new ones using the same
+Have a look at the sample books.toscrape.com spider and implement the new ones using the same
 structure, subclassing `BaseSpider` instead of `scrapy.Spider`. This way, your
 spiders will automatically read the URLs list from `resources/urls.json`.
 
 
 ## Customizing the Price Monitor
 
-The price monitor sends an email using Amazon SES service, so to run it you
-have to set both `AWS_ACCESS_KEY` and `AWS_SECRET_KEY` variables in
-`price_monitor/settings.py`. If you want to use another email service,
-you have to rewrite the `send_email_alert` function in
-`price_monitor/bin/monitor.py`.
+The price monitor script uses an `send_alert` function in the `price_monitor/bin/alert.py` 
+file to send an alert.  The current sample sends an email using Amazon SES 
+service, so to run it you  have to set both `AWS_ACCESS_KEY` and `AWS_SECRET_KEY` 
+variables in the file, along with details for the email sender and intended recipient.
+If you want to use another email service or another form of alert altogether,
+you can rewrite this file and include an equivalent `send_alert` function.
 
 The price monitor can be further customized via parameters to the
 `price_monitor/bin/monitor.py` script. We will dig on those parameters
@@ -62,17 +60,17 @@ later when showing how to schedule the project on Scrapy Cloud.
 
 1. Clone this repo:
 
-        $ git clone git@github.com:further-reading/price-monitoring-sample.git
+        $ git clone git@github.com:scrapinghub/sample-projects.git
 
 2. Enter the folder and install the project dependencies:
 
         $ cd scrapy_price_monitor
         $ pip install -r requirements.txt
 
-3. Create a free forever account on Scrapy Cloud:
-https://app.scrapinghub.com/account/signup/.
+3. Create an account on Zyte:  
+https://app.zyte.com/
 
-4. Create a Scrapy project on Scrapy Cloud and copy the project id from the project URL.
+4. Scroll to Scrapy Cloud Projects, select Creat Project take note of the project ID in the new project's url.
 
 5. Install [Scrapinghub command line tool (shub)](https://github.com/scrapinghub/shub):
 

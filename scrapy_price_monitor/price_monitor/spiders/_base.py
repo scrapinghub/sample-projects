@@ -11,6 +11,6 @@ class BaseSpider(scrapy.Spider):
         for name, urls in products.items():
             for url in urls:
                 if self.name in url:
-                    now = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+                    now = datetime.now().isoformat()
                     item = {'product_name': name, 'retailer': self.name, 'when': now}
                     yield scrapy.Request(url, meta={'item': item})
