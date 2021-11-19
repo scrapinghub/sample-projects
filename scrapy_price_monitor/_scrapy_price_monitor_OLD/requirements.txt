@@ -1,5 +1,0 @@
-scrapy
-boto
-extruct
-w3lib
-jinja2

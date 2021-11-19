@@ -4,3 +4,4 @@ extruct
 w3lib
 jinja2
 price-parser
+scrapinghub

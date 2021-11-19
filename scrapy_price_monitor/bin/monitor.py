@@ -4,15 +4,10 @@ import argparse
 import os
 from datetime import datetime, timedelta
 
-import boto
-from jinja2 import Environment, PackageLoader
-
 from price_monitor import settings
 from price_monitor.utils import get_product_names, get_retailers_for_product
 from price_monitor.collection_helper import CollectionHelper
-from w3lib.html import remove_tags
-
-jinja_env = Environment(loader=PackageLoader('price_monitor', 'templates'))
+from bin.alert import send_alert
 
 
 class DealsChecker(object):
@@ -81,30 +76,17 @@ class DealsFetcher(object):
         return latest_deals, previous_deals
 
 
-def send_email_alert(items):
-    ses = boto.connect_ses(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
-    html_body = jinja_env.get_template('email.html').render(items=items)
-
-    ses.send_email(
-        settings.EMAIL_ALERT_FROM,
-        'Price drop alert',
-        remove_tags(html_body),
-        settings.EMAIL_ALERT_TO,
-        html_body=html_body
-    )
-
-
 def main(args):
-    items = []
-    for prod_name in get_product_names():
-        fetcher = DealsFetcher(prod_name, args.apikey, args.project, args.days * 24)
-        checker = DealsChecker(*fetcher.get_deals(), args.threshold)
-        best_deal = checker.get_best_deal()
-        if checker.is_from_latest_crawl(best_deal):
-            items.append(best_deal)
+    items = ['stuff']
+    # for prod_name in get_product_names():
+    #     fetcher = DealsFetcher(prod_name, args.apikey, args.project, args.days * 24)
+    #     checker = DealsChecker(*fetcher.get_deals(), args.threshold)
+    #     best_deal = checker.get_best_deal()
+    #     if checker.is_from_latest_crawl(best_deal):
+    #         items.append(best_deal)
 
     if items:
-        send_email_alert(items)
+        send_alert(items)
 
 
 def parse_args():

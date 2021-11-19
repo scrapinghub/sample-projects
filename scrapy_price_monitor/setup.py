@@ -7,6 +7,6 @@ setup(
     version      = '1.0',
     packages     = find_packages(),
     package_data = {'price_monitor': ['resources/*.json', 'templates/*.html']},
-    scripts      = ['bin/monitor.py'],
+    scripts      = ['bin/monitor.py', 'bin/alert.py'],
     entry_points = {'scrapy': ['settings = price_monitor.settings']},
 )
