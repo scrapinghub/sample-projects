@@ -24,4 +24,4 @@ file:
   - `SPLASH_URL`: the URL where your Splash instance is available
   - `SPLASH_APIKEY`: your Splash API key (required if you're using an instance from Scrapy Cloud)
 - set your Crawlera settings in the same file:
-  - `CRAWLERA_APIKEY`: the API key for your Smart Proxy Manager user
+  - `ZYTE_SMARTPROXY_APIKEY`: the API key for your Smart Proxy Manager user
