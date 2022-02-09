@@ -29,7 +29,7 @@ class QuotesJsSpider(scrapy.Spider):
             },
             args={
                 'lua_source': self.LUA_SOURCE,
-                'crawlera_user': self.settings['CRAWLERA_APIKEY'],
+                'crawlera_user': self.settings['ZYTE_SMARTPROXY_APIKEY'],
                 'timeout': 60,
             },
             # tell Splash to cache the lua script, to avoid sending it for every request
@@ -56,7 +56,7 @@ class QuotesJsSpider(scrapy.Spider):
                 },
                 args={
                     'lua_source': self.LUA_SOURCE,
-                    'crawlera_user': self.settings['CRAWLERA_APIKEY'],
+                    'crawlera_user': self.settings['ZYTE_SMARTPROXY_APIKEY'],
                 },
                 cache_args=['lua_source'],
             )
