@@ -12,9 +12,13 @@ DOWNLOADER_MIDDLEWARES = {
     'scrapy_splash.SplashCookiesMiddleware': 723,
     'scrapy_splash.SplashMiddleware': 725,
     'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+    'scrapy_zyte_smartproxy.ZyteSmartProxyMiddleware': 610
 }
 
-CRAWLERA_APIKEY = ''  # Your crawlera API key
+ZYTE_SMARTPROXY_ENABLED = True
+ZYTE_SMARTPROXY_APIKEY = 'API-KEY'
+
+#CRAWLERA_APIKEY = ''  # Your crawlera API key
 
 # Splash settings
 SPLASH_URL = ''  # Splash instance URL from Scrapy Cloud
