@@ -15,7 +15,7 @@ DOWNLOADER_MIDDLEWARES = {
     'scrapy_zyte_smartproxy.ZyteSmartProxyMiddleware': 610
 }
 
-ZYTE_SMARTPROXY_ENABLED = True
+
 ZYTE_SMARTPROXY_APIKEY = 'API-KEY'
 
 #CRAWLERA_APIKEY = ''  # Your crawlera API key
