@@ -4,14 +4,10 @@ import argparse
 import os
 from datetime import datetime, timedelta
 
-import boto
-from hubstorage import HubstorageClient
-from jinja2 import Environment, PackageLoader
 from price_monitor import settings
 from price_monitor.utils import get_product_names, get_retailers_for_product
-from w3lib.html import remove_tags
-
-jinja_env = Environment(loader=PackageLoader('price_monitor', 'templates'))
+from price_monitor.collection_helper import CollectionHelper
+from bin.alert import send_alert
 
 
 class DealsChecker(object):
@@ -42,8 +38,13 @@ class DealsFetcher(object):
 
     def __init__(self, product_name, apikey, project_id, hours):
         self.product_name = product_name
-        project = HubstorageClient(apikey).get_project(project_id)
-        self.item_store = project.collections.new_store(product_name)
+        collection = CollectionHelper(
+            proj_id=project_id,
+            collection_name=product_name,
+            api_key=apikey,
+            create=True,
+        )
+        self.item_store = collection.store
         self.load_items_from_last_n_hours(hours)
 
     def load_items_from_last_n_hours(self, n=24):
@@ -75,21 +76,8 @@ class DealsFetcher(object):
         return latest_deals, previous_deals
 
 
-def send_email_alert(items):
-    ses = boto.connect_ses(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
-    html_body = jinja_env.get_template('email.html').render(items=items)
-
-    ses.send_email(
-        settings.EMAIL_ALERT_FROM,
-        'Price drop alert',
-        remove_tags(html_body),
-        settings.EMAIL_ALERT_TO,
-        html_body=html_body
-    )
-
-
 def main(args):
-    items = []
+    items = ['stuff']
     for prod_name in get_product_names():
         fetcher = DealsFetcher(prod_name, args.apikey, args.project, args.days * 24)
         checker = DealsChecker(*fetcher.get_deals(), args.threshold)
@@ -98,7 +86,7 @@ def main(args):
             items.append(best_deal)
 
     if items:
-        send_email_alert(items)
+        send_alert(items)
 
 
 def parse_args():

@@ -1,5 +1,9 @@
 scrapy
+price-parser
+scrapinghub
+
+# sample alert script requirements
+# replace with appropriate packages if not using ASN email alerts
 boto
-extruct
 w3lib
 jinja2
