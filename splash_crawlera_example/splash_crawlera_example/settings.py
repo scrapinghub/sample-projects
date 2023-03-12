@@ -14,6 +14,7 @@ DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
 }
 
+CRAWLERA_ENABLED = False
 CRAWLERA_APIKEY = ''  # Your crawlera API key
 
 # Splash settings
