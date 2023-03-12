@@ -2,13 +2,18 @@ from .base_spider import BaseSpider
 
 
 class AmazonSpider(BaseSpider):
-    name = "amazon.com"
+    name = "milsims.com"
 
     def parse(self, response):
-        item = response.meta.get('item', {})
-        item['url'] = response.url
-        item['title'] = response.css("span#productTitle::text").extract_first("").strip()
-        item['price'] = float(
-            response.css("span#priceblock_ourprice::text").re_first("\$(.*)") or 0
-        )
+        for product in response.css(".view-advanced-catalog tr > td"):
+
+    item = {}
+    item['title'] = product.css(".views-field-title a ::text").extract_first()
+    item['price'] = product.css(".views-field-phpcode span span::text").extract()[1]
+    item['url'] = product.css(".views-field-title a::attr(href)").extract()
         yield item
+
+    next_page = response.css('li.pager-nexta::attr(href)').extract_first()
+    if next_page is not None:
+        next_page = response.urljoin(next_page)
+        yield scrapy.Request(next_page, callback=self.parse)
